@@ -1,0 +1,22 @@
+{
+  "files": {
+    "main.css": "/indexeddb-test/static/css/main.f6cffc85.chunk.css",
+    "main.js": "/indexeddb-test/static/js/main.bdd023e8.chunk.js",
+    "main.js.map": "/indexeddb-test/static/js/main.bdd023e8.chunk.js.map",
+    "runtime-main.js": "/indexeddb-test/static/js/runtime-main.95d9740d.js",
+    "runtime-main.js.map": "/indexeddb-test/static/js/runtime-main.95d9740d.js.map",
+    "static/js/2.8bfe82ab.chunk.js": "/indexeddb-test/static/js/2.8bfe82ab.chunk.js",
+    "static/js/2.8bfe82ab.chunk.js.map": "/indexeddb-test/static/js/2.8bfe82ab.chunk.js.map",
+    "index.html": "/indexeddb-test/index.html",
+    "precache-manifest.b85edadd20db13da719c110b8c00426d.js": "/indexeddb-test/precache-manifest.b85edadd20db13da719c110b8c00426d.js",
+    "service-worker.js": "/indexeddb-test/service-worker.js",
+    "static/css/main.f6cffc85.chunk.css.map": "/indexeddb-test/static/css/main.f6cffc85.chunk.css.map",
+    "static/js/2.8bfe82ab.chunk.js.LICENSE.txt": "/indexeddb-test/static/js/2.8bfe82ab.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.95d9740d.js",
+    "static/js/2.8bfe82ab.chunk.js",
+    "static/css/main.f6cffc85.chunk.css",
+    "static/js/main.bdd023e8.chunk.js"
+  ]
+}
