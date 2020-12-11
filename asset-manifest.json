@@ -1,14 +1,14 @@
 {
   "files": {
     "main.css": "/indexeddb-test/static/css/main.30be82e1.chunk.css",
-    "main.js": "/indexeddb-test/static/js/main.597690b7.chunk.js",
-    "main.js.map": "/indexeddb-test/static/js/main.597690b7.chunk.js.map",
+    "main.js": "/indexeddb-test/static/js/main.7982caaf.chunk.js",
+    "main.js.map": "/indexeddb-test/static/js/main.7982caaf.chunk.js.map",
     "runtime-main.js": "/indexeddb-test/static/js/runtime-main.95d9740d.js",
     "runtime-main.js.map": "/indexeddb-test/static/js/runtime-main.95d9740d.js.map",
     "static/js/2.5f4ed1ac.chunk.js": "/indexeddb-test/static/js/2.5f4ed1ac.chunk.js",
     "static/js/2.5f4ed1ac.chunk.js.map": "/indexeddb-test/static/js/2.5f4ed1ac.chunk.js.map",
     "index.html": "/indexeddb-test/index.html",
-    "precache-manifest.b44b2f4af4eab722aa608a2523e944ee.js": "/indexeddb-test/precache-manifest.b44b2f4af4eab722aa608a2523e944ee.js",
+    "precache-manifest.edba2ef362fbea9eb98e404092b72165.js": "/indexeddb-test/precache-manifest.edba2ef362fbea9eb98e404092b72165.js",
     "service-worker.js": "/indexeddb-test/service-worker.js",
     "static/css/main.30be82e1.chunk.css.map": "/indexeddb-test/static/css/main.30be82e1.chunk.css.map",
     "static/js/2.5f4ed1ac.chunk.js.LICENSE.txt": "/indexeddb-test/static/js/2.5f4ed1ac.chunk.js.LICENSE.txt"
@@ -17,6 +17,6 @@
     "static/js/runtime-main.95d9740d.js",
     "static/js/2.5f4ed1ac.chunk.js",
     "static/css/main.30be82e1.chunk.css",
-    "static/js/main.597690b7.chunk.js"
+    "static/js/main.7982caaf.chunk.js"
   ]
 }
