@@ -1,7 +1,7 @@
 // const supportStabilityIndexedDb = !!window.indexedDB;
 const indexedDB = window.indexedDB || window.mozIndexedDB || window.webkitIndexedDB || window.msIndexedDB;
 // const notSupportIndexedbDb = !!indexedDB;
-const IDBTransaction = window.IDBTransaction || window.webkitIDBTransaction || window.msIDBTransaction;
+// const IDBTransaction = window.IDBTransaction || window.webkitIDBTransaction || window.msIDBTransaction;
 // const IDBKeyRange = window.IDBKeyRange || window.webkitIDBKeyRange || window.msIDBKeyRange;
 
 const READ_WRITE = 'readwrite';
@@ -9,6 +9,11 @@ const READ_ONLY = 'readonly';
 
 const objectStoreName = 'file_storage';
 
+/**
+ * @param {string} name 
+ * @param {number} version 
+ * @return {IDBDatabase}
+ */
 function connect(name, version) {
 
   return new Promise((resolve, reject) => {
@@ -23,20 +28,30 @@ function connect(name, version) {
     });
     
     DBOpenRequest.addEventListener('success', (event) => {
-      resolve(DBOpenRequest.result);
+      const db = DBOpenRequest.result;
+      
+      db.addEventListener('abort', (error) => {
+        console.log('abort db', error);
+      })
+
+      db.addEventListener('error', (error) => {
+        console.log('error db', error);
+      })
+
+      db.addEventListener('close', function (event) {
+        console.error('close', event);
+      })
+
+      db.addEventListener('versionchange', function (event) {
+        console.error('versionchange', event);
+        db.close();
+      })
+
+      resolve(db);
     });
 
     DBOpenRequest.addEventListener('upgradeneeded', (event) => {
       var db = event.target.result;
-    
-      db.addEventListener('error', () => {
-        reject();
-      })
-
-      db.addEventListener('close', function (event) {
-        console.error(event);
-        alert('close');
-      })
     
       var objectStore = db.createObjectStore(objectStoreName, { keyPath: "id", autoIncrement: true });
       objectStore.createIndex("id", "id");
@@ -168,6 +183,45 @@ function getAll(db) {
   })
 }
 
+/**
+ * @param {IDBDatabase} db
+ * @param {number} id
+ */
+function remove(db, id) {
+  return new Promise(function (resolve, reject) {
+    console.log('start remove transaction');
+    const transaction = db.transaction([objectStoreName], READ_WRITE);
+
+    transaction.addEventListener('abort', function (event) {
+      console.error('an abort transaction remove', event, transaction);
+      reject(event);
+    })
+
+    transaction.addEventListener('error', function (event) {
+      console.error('an error transaction remove', event, transaction);
+      reject(event);
+    })
+
+    transaction.addEventListener('complete', function (event) {
+      console.log('complete remove transaction', event, transaction);
+      resolve(id);
+    })
+
+    const objectStore = transaction.objectStore(objectStoreName);
+    const objectStoreRequest = objectStore.delete(id);
+
+    objectStoreRequest.addEventListener('success', function (event) {
+      id = objectStoreRequest.result;
+      console.log('id = ' + id);
+      console.log('remove: object store request success', event, objectStoreRequest, objectStore);
+    })
+
+    objectStoreRequest.addEventListener('error', function (event) {
+      console.error('remove: object store request error', event, objectStoreRequest, objectStore );
+    })
+  })
+}
+
 const name = 'test';
 const version = 1;
 
@@ -197,8 +251,51 @@ async function getFiles() {
   return getAll(db);
 }
 
+async function removeFile(id) {
+  const db = await connect(name, version);
+  return remove(db, id);
+}
+
+async function deleteDb() {
+  const db = await connect(name, version);
+
+  db.close();
+
+  return new Promise(function (resolve, reject) {
+    try {
+      console.log('start remove db');
+      const dbDeleteRequest = indexedDB.deleteDatabase(name);
+
+      dbDeleteRequest.onblocked = (event) => {
+        console.warn('blocked remove db:', event, dbDeleteRequest);
+        // reject(event);
+      };
+
+      dbDeleteRequest.onerror = (event) => {
+        console.error('error remove db:', event, dbDeleteRequest);
+        reject(event);
+      };
+
+      dbDeleteRequest.onsuccess = (event) => {
+        if (!dbDeleteRequest.result) {
+          console.log('remove db:', event, dbDeleteRequest);
+          return resolve(event);
+        }
+        console.error('went wrong', event, dbDeleteRequest);
+        reject(event);
+      };
+
+    } catch(error) {
+      console.error('error remove db', error);
+      reject(error);
+    }
+  });
+}
+
 export {
   putFile,
   getFile,
-  getFiles
+  getFiles,
+  deleteDb,
+  removeFile
 };
