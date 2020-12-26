@@ -1,5 +1,56 @@
+
+
+/**
+ * @param {Object} source 
+ * @param {Object} destination 
+ */
+function proxyProperties(source, destination) {
+  Object.keys(source).forEach((nameProperty) => {
+    if (source.hasOwnProperty(nameProperty)) {
+      Object.defineProperty(destination, nameProperty, {
+        get () {
+          return source[nameProperty];
+        },
+
+        set (value) {
+          source[nameProperty] = value;
+        }
+      })
+    }
+  })
+}
+
 export class IDBPromise {
 
+  /**
+   * @type {IDBDatabase}
+   */
+  idbDatabase;
+
+  /**
+   * @param {idbDatabase} idbDatabase 
+   */
+  constructor(idbDatabase) {
+    this.idbDatabase = idbDatabase;
+
+    proxyProperties(idbDatabase, this);
+  }
+
+  transaction() {
+
+  }
+
+  createObjectStore() {
+
+  }
+
+  deleteObjectStore() {
+
+  }
+
+  close() {
+
+  }
 }
 
 class IDBFactoryPromise {
