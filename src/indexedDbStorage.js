@@ -110,6 +110,7 @@ function read(db, id) {
 
   return new Promise(function (resolve, reject) {
     let file = null;
+    debugger;
     console.log('start read transaction');
     const transaction = db.transaction([objectStoreName], READ_ONLY);
 
